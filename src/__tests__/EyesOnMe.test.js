@@ -7,13 +7,13 @@ beforeEach(() => {
 });
 
 test('displays a button with the text "Eyes on me"', () => {
-  expect(screen.queryByText(/Eyes on me/)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /Eyes on me/ })).toBeInTheDocument();
 });
 
 test("focusing the button triggers console output", () => {
   console.log = jest.fn();
 
-  const button = screen.queryByText(/Eyes on me/);
+  const button = screen.getByRole('button', { name: /Eyes on me/ });
   fireEvent.focus(button);
 
   expect(console.log).toHaveBeenCalled();
@@ -23,9 +23,10 @@ test("focusing the button triggers console output", () => {
 test("removing focus (blur) on the button triggers console output", () => {
   console.log = jest.fn();
 
-  const button = screen.queryByText(/Eyes on me/);
+  const button = screen.getByRole('button', { name: /Eyes on me/ });
   fireEvent.blur(button);
 
   expect(console.log).toHaveBeenCalled();
   expect(console.log.mock.calls[0][0]).toBe("Hey! Eyes on me!");
 });
+
